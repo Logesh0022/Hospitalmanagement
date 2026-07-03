@@ -18,16 +18,26 @@ connectDB();
 
 const app = express();
 
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://hospitalmanagement-frontend.vercel.app",
+  "https://hospitalmanagement-frontend-oiv3ukq8w-logesh9.vercel.app"
+];
+
 app.use(cors({
-  origin: [
-    "http://localhost:5173",
-    "https://hospitalmanagement-frontend.vercel.app",
-    "https://hospitalmanagement-2qe20q33z-logesh9.vercel.app",
-    "https://hospitalmanagement-hqf7rr79f-logesh9.vercel.app"
-  ],
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(null, true); // allow all preview URLs for testing
+    }
+  },
   methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
-  credentials: true,
+  allowedHeaders: ["Content-Type", "Authorization"],
+  credentials: true
 }));
+
+app.options("*", cors());
 
 app.use(express.json());
 app.use(morgan("dev"));
