@@ -19,7 +19,13 @@ connectDB();
 const app = express();
 
 app.use(cors({
-  origin: true,
+  origin: [
+    "http://localhost:5173",
+    "https://hospitalmanagement-frontend.vercel.app",
+    "https://hospitalmanagement-2qe20q33z-logesh9.vercel.app",
+    "https://hospitalmanagement-hqf7rr79f-logesh9.vercel.app"
+  ],
+  methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
   credentials: true,
 }));
 
